@@ -1,0 +1,198 @@
+#include <iostream>
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctime>
+#include <windows.h>
+#include <chrono>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <list>
+
+using namespace std;
+
+class Node {
+private:
+	int value;
+	Node* next;
+public:
+	Node(int v, Node* n) {
+		value = v;
+		next = n;
+	}
+	~Node() {
+		if (next)
+			delete next;
+	}
+	void SetNext(Node* n) {
+		next = n;
+	}
+	Node* GetNext() {
+		return next;
+	}
+	void SetValue(int val) {
+		value = val;
+	}
+	int GetValue() {
+		return value;
+		if (!value)
+			return -1;
+	}
+};
+
+class SinglyLinkedList {
+private:
+	Node* head;
+	int size;
+public:
+	SinglyLinkedList() {
+		head = NULL;
+		size = 0;
+	}
+	~SinglyLinkedList() {
+		if (head) delete head;
+	}
+	void Insert(Node* after, int val) {
+		Node* n;
+		if (after == NULL) {
+			n = new Node(val, head);
+			head = n;
+		}
+		else {
+			n = new Node(val, after->GetNext());
+			after->SetNext(n);
+		}
+		size = size + 1;
+	}
+
+	void Delete(Node* n) {
+		if (n == head) {
+			head = n->GetNext();
+			n->SetNext(NULL);
+			delete n;
+		}
+		else {
+			Node* p = Prev(n);
+			p->SetNext(n->GetNext());
+			n->SetNext(NULL);
+			delete n;
+		}
+		size = size - 1;
+	}
+
+	Node* LookValue(int val) {
+		Node* n = head;
+		while (n != NULL && n->GetValue() != val)
+			n = n->GetNext();
+		return n;
+	}
+
+	Node* LookPos(int pos) {
+		if ((pos < 0) || (pos > size - 1))
+			return NULL;
+		Node* n = head;
+		for (int i = 0; i < pos; i++)
+			n = n->GetNext();
+		return n;
+	}
+
+	Node* Next(Node* n) {
+		return n->GetNext();
+	}
+
+	Node* Prev(Node* n) {
+		if (n == head)
+			return NULL;
+		Node* i = head;
+		while (i != NULL && i->GetNext() != n)
+			i = i->GetNext();
+		return i;
+	}
+
+	int Lenght() {
+		return size;
+	}
+
+	void Show() {
+		Node* i = head;
+		while (i != NULL) {
+			cout << i->GetValue() << " ";
+			i = i->GetNext();
+		}
+		cout << endl;
+	}
+};
+
+
+int main(){
+
+int Mas1 = 10;
+int r;
+
+SinglyLinkedList SingL;
+
+cout << "\n\n\n Singly Linked List  //// //// 5_2_lab:";
+
+for (int i = 0; i < Mas1; i++) {
+	SingL.Insert(NULL, (i + 1)); 
+}
+cout << "\nBefore list:	";
+SingL.Show();
+
+Node* n = SingL.LookValue(NULL);
+Node* n1 = SingL.LookValue(1);
+Node* n2 = SingL.LookValue(5);
+SingL.Insert(n, 0);
+SingL.Insert(n1, 11);
+SingL.Insert(n2, 100);
+cout << "List after insertion at << beginning >> ,<< end >> , << middle>> :	";
+SingL.Show();
+
+n = SingL.LookPos(0);
+n1 = SingL.LookPos(7);
+n2 = SingL.LookPos(12);
+
+SingL.Delete(n);
+SingL.Delete(n1);
+SingL.Delete(n2);
+cout << "List after deletion at << beginning >> ,<< end >> , << middle>>  :	";
+SingL.Show();
+
+cout << "List length:	" << SingL.Lenght() << "\n";
+
+int H1[] = {4, 110};
+int Q = 0;
+for (int i = 0; i < 2; i++) {
+	if (H1[i] <= SingL.Lenght()) {
+		Node* p = SingL.LookValue(H1[i]);
+		while (SingL.LookPos(Q)->GetValue() != p->GetValue()) {
+			Q++;
+			if (SingL.LookPos(Q)->GetValue() == p->GetValue())
+			cout << "Value:	" << H1[i] << "\tItem index (pos) :	" << Q - 1 << endl;
+			if (Q > 20)
+				break;
+		}
+
+	}
+	else
+		cout << "Value:	" << H1[i] << "\tNo, Error!" << endl;
+}
+int H[] = {5, 7};
+for (int i = 0; i < 2; i++) {
+	if (H[i] <= SingL.Lenght()) {
+		Node* p1 = SingL.LookPos(H[i]);
+		cout << "Item number : "  << H[i] << " " << p1->GetValue() << endl;
+	}
+	else
+		cout << "\position  as " << H[i] << "it's not in the list <<<ERROR  ### Sorry ! >>>\n\n" << endl;
+}
+
+cout << "prev item  -4 :" << SingL.Prev(SingL.LookPos(4))->GetValue() << endl;
+cout << "next item -4  :" << SingL.Next(SingL.LookPos(4))->GetValue() << endl;
+
+cout << " Press any key for finish ...." <<  endl;
+
+_getch();
+return 0;
+}

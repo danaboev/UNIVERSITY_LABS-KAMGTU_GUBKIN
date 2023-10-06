@@ -1,0 +1,39 @@
+#include <iostream>
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctime>
+#include <time.h>
+#include <windows.h>
+#include <chrono>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <list>
+#include <map>
+#include <stdlib.h>
+#include <locale.h>
+#include "lib.h"
+#define N 8
+using namespace std;
+
+void main() {
+	
+	cout << "Array based queue" << endl;
+	Queue queue;
+	cout << "Empty queue: " << queue.isEmpty() << endl;
+	for (int i = 1; i < N; i++)
+		queue.push(i);
+	cout << "Queue: ";
+	queue.out();
+
+	queue.pop();
+	queue.pop();
+	cout << "Queue: ";
+	queue.out();
+
+	cout << "Size of queue: " << queue.size() << endl;
+	cout << "Empty queue: " << queue.isEmpty() << endl << endl;
+	cout << "Enter any key for finish....."<< endl; 
+
+}

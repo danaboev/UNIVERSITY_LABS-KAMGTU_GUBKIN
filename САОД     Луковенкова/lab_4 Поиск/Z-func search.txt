@@ -1,0 +1,80 @@
+#include <iostream>
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctime>
+#include <windows.h>
+#include <chrono>
+#include <string>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+
+bool Z_func(string pattern, string target)
+{
+    string s = pattern + '$' + target;
+    int n = s.length();
+    vector<int> z(n, 0);
+    int goal = pattern.length();
+    int r = 0, l = 0, i;
+    for (int k = 1; k < n; k++)
+    {
+        if (k > r)
+        {
+            for (i = k; i < n && s[i] == s[i - k]; i++);
+            if (i > k)
+            {
+                z[k] = i - k;
+                l = k;
+                r = i - 1;
+            }
+        }
+        else
+        {
+            int kt = k - l, b = r - k + 1;
+            if (z[kt] > b)
+            {
+                for (i = r + 1; i < n && s[i] == s[i - k]; i++);
+                z[k] = i - k;
+                l = k;
+                r = i - 1;
+            
+            }
+            cout << "\nPattern found at index "<< i << endl;
+        }
+        if (z[k] == goal)
+       
+            return true;
+ 
+    }
+    return false;
+   
+}
+
+int main()
+{
+    string tar = "abcabaabcabca";
+    string pat ;
+    int k = 0;
+    cout << "Enter Pattern to Search at <abcabaabcabca:>  ";
+    cin >> pat;
+
+    auto start = chrono::steady_clock::now();
+        
+    if (Z_func(pat, tar))
+        cout << "'" << pat << "' found in string '" << tar << "'" << endl;
+    else
+        cout << "'" << pat << "' not found in string '" << tar << "'" << endl;
+    k++;
+    auto stop = chrono::steady_clock::now();
+    auto ns = chrono::duration_cast<chrono::nanoseconds>(stop - start);
+    cout << "\nruntime  = " << ns.count() << " nanosec" << endl;
+    if (k == 0)
+        cout << "\nError:No Match Found! \n";
+    
+    else
+        cout << "\nTotal Instances Found = " << k << "\n";
+
+    return 0;
+}

@@ -1,0 +1,39 @@
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <ctime>
+#include <windows.h>
+#define w 100
+
+using namespace std;
+int main()
+
+{
+	int i,n, fact =1;
+	cout << "enter n=";
+	cin >> n;
+
+	
+unsigned int start_time = clock();
+
+
+	for (i=2; i<=n;i++)
+	{
+	fact = fact * i;
+	Sleep(1);
+
+	}
+	unsigned int end_time = clock();
+	unsigned int search_time = end_time - start_time  ;
+
+	double tsec = search_time / double(CLOCKS_PER_SEC);
+cout << "\n""factorial = " << n << "! = " << fact ;
+cout<< " \n";
+
+cout << "\n " <<"runtimie = " << tsec << "\n"<< endl; 
+
+system ("pause");
+return 0;
+}
+

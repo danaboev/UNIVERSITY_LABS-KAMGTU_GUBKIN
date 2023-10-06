@@ -1,0 +1,315 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+private:
+	int val;
+	Node* left;
+	Node* right;
+	Node* parent;
+public:
+	Node(int value, Node* l, Node* r, Node* p) {
+		val = value;
+		left = l;
+		right = r;
+		parent = p;
+	}
+	~Node() {
+		if (left)
+			delete left;
+		if (right)
+			delete right;
+	}
+	void setValue(int value) { val = value; }
+	void setLeft(Node* l) { left = l; }
+	void setRight(Node* r) { right = r; }
+	void setParent(Node* p) { parent = p; };
+	int getValue() { return val; }
+	Node* getLeft() { return left; }
+	Node* getRight() { return right; }
+	Node* getParent() { return parent; }
+};
+
+class Tree {
+private:
+	Node* root;
+	void add(int val, Node* node) {
+		if (root == NULL) {
+			node = new Node(val, NULL, NULL, NULL);
+			root = node;
+			return;
+		}
+		if (val < node->getValue()) {
+			if (node->getLeft() == NULL) {
+				Node* newNode = new Node(val, NULL, NULL, node);
+				node->setLeft(newNode);
+			}
+			else {
+				add(val, node->getLeft());
+			}
+		}
+		else if (val > node->getValue()) {
+			if (node->getRight() == NULL) {
+				Node* newNode = new Node(val, NULL, NULL, node);
+				node->setRight(newNode);
+			}
+			else {
+				add(val, node->getRight());
+			}
+		}
+		else
+			return;
+	}
+	void outTree(Node* node, int n) {
+		if (node != NULL) {
+			outTree(node->getRight(), n + 5);
+			for (int i = 0; i < n; i++)
+				cout << " ";
+			cout << node->getValue() << endl;
+			outTree(node->getLeft(), n + 5);
+		}
+	}
+	void sho(Node* node) {
+		if (node->getLeft() != NULL)
+			sho(node->getLeft());
+		cout << node->getValue() << ", ";
+		if (node->getRight() != NULL)
+			sho(node->getRight());
+	}
+	Node* In(Node* node, int val) {
+		if (node != NULL) {
+			if (node->getValue() > val)
+				In(node->getLeft(), val);
+			else if (node->getValue() < val)
+				In(node->getRight(), val);
+			else return node;
+		}
+		else
+			return NULL;
+	}
+	void Peres(Tree* tree, Node* node) {
+		if (node != NULL) {
+
+			if (node->getLeft() != NULL)
+				Peres(tree, node->getLeft());
+			if (node->getRight() != NULL)
+				Peres(tree, node->getRight());
+			if (!tree->in(node->getValue())) {
+				delNode(node->getValue());
+			}
+
+		}
+	}
+	Node* getRoot() {
+		return root;
+	}
+	void Ob(Tree* tree, Node* node) {
+		if (node != NULL) {
+
+			if (in(node->getValue()) == false)
+				addNode(node->getValue());
+
+			if (node->getLeft() != NULL)
+				Ob(tree, node->getLeft());
+			if (node->getRight() != NULL)
+				Ob(tree, node->getRight());
+
+
+		}
+	}
+public:
+	Tree() { root = NULL; }
+	~Tree() {
+		if (root != NULL)
+			delete root;
+	}
+	int max() {
+		Node* now = root;
+		while (now->getRight() != NULL) {
+			now = now->getRight();
+		}
+		return now->getValue();
+	}
+	int min() {
+		Node* now = root;
+		while (now->getLeft() != NULL) {
+			now = now->getLeft();
+		}
+		return now->getValue();
+	}
+	Node* next(int val) {
+		if (root == NULL)
+			return NULL;
+		else {
+			Node* pos = root;
+			Node* parent = NULL;
+			while (pos != NULL) {
+				if (pos->getValue() < val) {//sign
+					parent = pos;
+					pos = pos->getRight();
+				}
+				else if (pos->getValue() > val) {//sign
+					parent = pos;//not enough
+					pos = pos->getLeft();
+				}
+				else
+					break;
+			}
+			if (pos == NULL)
+				return NULL;
+			if (pos->getRight() == NULL) {
+				if (pos->getValue() == max())
+					return NULL;
+				else
+					return parent;
+			}
+			else {
+				pos = pos->getRight();//my
+				while (pos->getRight() != NULL) {
+					if (pos->getLeft() != NULL)
+						pos = pos->getLeft();
+					else
+						break;
+				}
+				return pos;
+			}
+		}
+	}
+	Node* prev(int val) {
+		if (root == NULL)
+			return NULL;
+		else {
+			Node* pos = root;
+			Node* parent = NULL;
+			while (pos != NULL) {
+				if (pos->getValue() < val) {//sign
+					parent = pos;
+					pos = pos->getRight();
+				}
+				else if (pos->getValue() > val) {//sign
+					parent = pos;//	not enough
+					pos = pos->getLeft();
+				}
+				else
+					break;
+			}
+			if (pos == NULL)
+				return NULL;
+			if (pos->getLeft() == NULL) {
+				if (pos->getValue() == min()) {
+					return NULL;
+				}
+				else
+					return parent;
+			}
+			else {
+				pos = pos->getLeft();//my
+				while (pos->getRight() != NULL) {
+					if (pos->getRight() != NULL)
+						pos = pos->getRight();
+					else
+						break;
+				}
+				return pos;
+			}
+		}
+	}
+	void addNode(int val) {
+		add(val, root);
+	}
+	Node* lookUp(int val) {
+		Node* pos = root;
+		while (pos != NULL) {
+			if (val > pos->getValue())
+				pos = pos->getRight();
+			else if (val < pos->getValue())
+				pos = pos->getLeft();
+			else
+				return pos;
+		}
+		return NULL;
+	}
+	void delNode(int val) {
+		Node* node = lookUp(val);
+		if (node == NULL)
+			return;
+		else {
+			if ((node->getLeft() == NULL) && (node->getRight() == NULL)) {
+				if (node->getParent() == NULL)
+					root = NULL;
+				else if (node->getParent()->getLeft() == node)
+					node->getParent()->setLeft(NULL);
+				else
+					node->getParent()->setRight(NULL);
+				delete node;
+				return;
+			}
+			if ((node->getLeft() == NULL) && (node->getRight() != NULL)) {
+				if (node->getParent() == NULL)
+					root = node->getRight();
+				else if (node->getParent()->getLeft() == node) {
+					node->getParent()->setLeft(node->getRight());
+					node->getRight()->setParent(node->getParent());
+				}
+				else {
+					node->getParent()->setRight(node->getRight());
+					node->getRight()->setParent(node->getParent());
+				}
+				node->setRight(NULL);
+				delete node;
+				return;
+			}
+			if ((node->getLeft() != NULL) && (node->getRight() == NULL)) {
+				if (node->getParent() == NULL)
+					root = node->getLeft();
+				else if (node->getParent()->getLeft() == node) {
+					node->getParent()->setLeft(node->getLeft());
+					node->getLeft()->setParent(node->getParent());
+				}
+				else {
+					node->getParent()->setRight(node->getLeft());
+					node->getLeft()->setParent(node->getParent());
+				}
+				node->setLeft(NULL);
+				delete node;
+				return;
+			}
+			Node* nnew = next(node->getValue());
+			if (nnew == NULL)
+				nnew = prev(node->getValue());
+			int value = nnew->getValue();
+			delNode(nnew->getValue());
+			node->setValue(value);
+		}
+	}
+	void delTree() {
+		if (root != NULL)
+			delete root;
+		root = NULL;
+
+	}
+	bool in(int val) {
+		if (In(root, val) != NULL)
+			return true;
+		else
+			return false;
+
+	}
+	void peres(Tree* tree) {
+		Peres(tree, root);
+	}
+	void ob(Tree* tree) {
+		Node* rootB = tree->getRoot();
+		Ob(tree, rootB);
+	}
+	void out(int n) {
+		outTree(root, n);
+	}
+	void show() {
+		sho(root);
+		cout << "\b\b " << endl;
+	}
+
+};
+
+

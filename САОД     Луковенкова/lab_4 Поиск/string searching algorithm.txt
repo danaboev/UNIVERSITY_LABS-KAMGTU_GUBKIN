@@ -1,0 +1,49 @@
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <ctime>
+#include <windows.h>
+#include <chrono>
+#include <algorithm>
+using namespace std;
+
+
+int main()
+{
+    char t[] = "abcabaabcabca";
+    char w[100] ;
+    int i, j, k = 0, len_t, len_w;
+   
+    fflush(stdin);
+    cout << "Enter Pattern to Search at <abcabaabcabca:> \n\n";
+    cin >> w;
+    
+    auto start = chrono::steady_clock::now();
+    len_t = strlen(t);
+    len_w = strlen(w);
+
+    for (i = 0; i <= (len_t - len_w); i++)
+    {
+        for (j = 0; j < len_w; j++)
+        {
+           
+            if (t[i + j] != w[j])
+                break;
+        }
+        if (j == len_w)
+        {
+            k++;
+            cout << "\nPattern Found at Position: " << i;
+        }
+    }
+    if (k == 0)
+        cout << "\nError:No Match Found!";
+
+    else
+        cout << "\nTotal Instances Found = " << k;
+    auto stop = chrono::steady_clock::now();
+    auto ns = chrono::duration_cast<chrono::nanoseconds>(stop - start);
+    cout << "runtime  = " << ns.count() << " nanosec" << endl;
+    return 0;
+}

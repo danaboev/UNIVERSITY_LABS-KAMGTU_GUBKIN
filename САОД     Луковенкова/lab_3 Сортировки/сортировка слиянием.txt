@@ -1,0 +1,50 @@
+////слиянием 
+
+void mergesort( int*l, int* r, int* m, int* temp){
+
+    auto start = chrono::steady_clock::now();
+
+
+int *cl =  l , *cr = m, cur = 0;
+while (cl< m && cr <r ){
+
+if (*cl < *cr ) temp [cur++] =  *cl, cl++;
+
+else  temp [cur ++ ] = *cr,  cr++;
+
+}
+
+while (cl < m) temp[cur++] =  *cl, cl++;
+while (cl < r) temp[cur++] =  *cr, cr++;
+
+cur = 0 ;
+for (int* i = l; i<r ; i++)
+*i  = temp[cur++];
+
+
+  auto stop = chrono::steady_clock::now();
+  auto ns = chrono::duration_cast<chrono::nanoseconds>(stop - start);
+  cout << "runtime  = " << ns.count() << " nanosec" << endl;
+
+}
+
+int main()
+{
+    cout << "Before sort:\n";
+    for (int i = 0; i < n; ++i)
+         A[i] = i+1;
+    random_shuffle(A, A + n);
+    for (int i = 0; i < n; ++i)
+        cout << A[i] << "  ";
+    cout << endl;
+
+    cout << "Merge Sort:\n";
+    mergesort(A, A + n);
+
+    for (int i = 0; i < n; ++i)
+        cout << A[i] << "  ";
+    cout << endl;
+
+
+    _getch();
+}

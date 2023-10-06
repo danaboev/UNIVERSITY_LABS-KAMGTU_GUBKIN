@@ -1,0 +1,47 @@
+D:\моя учеба\Tests\Tests\bin\Debug\Tests.exe.config
+D:\моя учеба\Tests\Tests\bin\Debug\Tests.exe
+D:\моя учеба\Tests\Tests\bin\Debug\Tests.pdb
+D:\моя учеба\Tests\Tests\obj\Debug\Tests.csprojResolveAssemblyReference.cache
+D:\моя учеба\Tests\Tests\obj\Debug\Tests.AddTests.resources
+D:\моя учеба\Tests\Tests\obj\Debug\Tests.Form1.resources
+D:\моя учеба\Tests\Tests\obj\Debug\Tests.Properties.Resources.resources
+D:\моя учеба\Tests\Tests\obj\Debug\Tests.csproj.GenerateResource.Cache
+D:\моя учеба\Tests\Tests\obj\Debug\Tests.exe
+D:\моя учеба\Tests\Tests\obj\Debug\Tests.pdb
+D:\моя учеба\Tests\Tests\obj\Debug\Tests.TestingForm.resources
+D:\моя учеба\Tests\Tests\obj\Debug\Tests.SelectTest.resources
+D:\моя учеба\Tests\Tests\obj\Debug\Tests.CreateTest.resources
+D:\моя учеба\Tests\Tests\obj\Debug\Tests.AuthForm.resources
+D:\моя учеба\Tests\Tests\obj\Debug\Tests.Registration.resources
+C:\Users\Jakhongir\Desktop\Tests\Tests\bin\Debug\Tests.exe.config
+C:\Users\Jakhongir\Desktop\Tests\Tests\bin\Debug\Tests.exe
+C:\Users\Jakhongir\Desktop\Tests\Tests\bin\Debug\Tests.pdb
+C:\Users\Jakhongir\Desktop\Tests\Tests\obj\Debug\Tests.AddTests.resources
+C:\Users\Jakhongir\Desktop\Tests\Tests\obj\Debug\Tests.AuthForm.resources
+C:\Users\Jakhongir\Desktop\Tests\Tests\obj\Debug\Tests.CreateTest.resources
+C:\Users\Jakhongir\Desktop\Tests\Tests\obj\Debug\Tests.Properties.Resources.resources
+C:\Users\Jakhongir\Desktop\Tests\Tests\obj\Debug\Tests.Registration.resources
+C:\Users\Jakhongir\Desktop\Tests\Tests\obj\Debug\Tests.SelectTest.resources
+C:\Users\Jakhongir\Desktop\Tests\Tests\obj\Debug\Tests.TestingForm.resources
+C:\Users\Jakhongir\Desktop\Tests\Tests\obj\Debug\Tests.csproj.GenerateResource.cache
+C:\Users\Jakhongir\Desktop\Tests\Tests\obj\Debug\Tests.csproj.CoreCompileInputs.cache
+C:\Users\Jakhongir\Desktop\Tests\Tests\obj\Debug\Tests.exe
+C:\Users\Jakhongir\Desktop\Tests\Tests\obj\Debug\Tests.pdb
+C:\Users\Jakhongir\Desktop\Tests\Tests\obj\Debug\Tests.csproj.AssemblyReference.cache
+C:\Users\Jakhongir\Desktop\Tests\Tests\obj\Debug\Tests.FormMain.resources
+C:\Users\Jakhongir\Desktop\Tests+\Tests\bin\Debug\Tests.exe.config
+C:\Users\Jakhongir\Desktop\Tests+\Tests\bin\Debug\Tests.exe
+C:\Users\Jakhongir\Desktop\Tests+\Tests\bin\Debug\Tests.pdb
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Debug\Tests.csproj.AssemblyReference.cache
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Debug\Tests.AddTests.resources
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Debug\Tests.AuthForm.resources
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Debug\Tests.CreateTest.resources
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Debug\Tests.FormMain.resources
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Debug\Tests.Properties.Resources.resources
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Debug\Tests.Registration.resources
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Debug\Tests.SelectTest.resources
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Debug\Tests.TestingForm.resources
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Debug\Tests.csproj.GenerateResource.cache
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Debug\Tests.csproj.CoreCompileInputs.cache
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Debug\Tests.exe
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Debug\Tests.pdb

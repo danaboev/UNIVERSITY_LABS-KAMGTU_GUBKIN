@@ -1,0 +1,161 @@
+#include <iostream>
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctime>
+#include <time.h>
+#include <windows.h>
+#include <chrono>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <list>
+#include <map>
+#include <stdlib.h>
+#include <locale.h>
+#include "lib.h"
+#define N 8
+using namespace std;
+
+//(a+b/2)*(c-d)+f
+//(a-b)/(c-d)*(f-e)
+//a+b-f/e*d
+
+void main() {
+	
+	cout << "Reverse Polish notation: " << endl;
+	const int STR_LENGTH = 10;
+	char in_str[STR_LENGTH] = { "a+b-f/e*d" };
+	cout << in_str << "   =>   ";
+	arrQueue out;//output string, conveniently use turn for her
+
+	Stack buf;
+
+	map<char, int> respect;
+	respect.emplace('+', 2);
+	respect.emplace('-', 2);
+	respect.emplace('*', 3);
+	respect.emplace('/', 3);
+	respect.emplace('^', 4);
+
+	auto it = respect.find('+');
+
+	for (int i = 0; i < STR_LENGTH; i++) {
+		switch (in_str[i])
+		{
+		case '(':
+			buf.push((int)in_str[i]);
+			break;
+		case ')':
+			while (buf.top()->GetValue() != 40) {//do before opening bracket
+				out.push(buf.top()->GetValue());
+				buf.pop();
+			}
+			buf.pop();//remove the opening bracket from the stack
+			break;
+		case '+': {
+			it = respect.find('+');
+			if (buf.length() != 0) {
+				auto top = respect.find((char)buf.top()->GetValue());
+				if (buf.top()->GetValue() != 40) {//if there is an opening bracket on the stack, then you don’t have to push anything
+					while ((it->second <= top->second)) {
+						out.push(buf.top()->GetValue());
+						buf.pop();
+						if (buf.length() == 0)
+							break;
+						top = respect.find((char)buf.top()->GetValue());
+					}
+				}
+			}
+			buf.push((int)in_str[i]);
+
+			break;
+		}
+		case '-': {
+			it = respect.find('-');
+			if (buf.length() != 0) {
+				auto top = respect.find((char)buf.top()->GetValue());
+				if (buf.top()->GetValue() != 40) {
+					while ((it->second <= top->second)) {
+						out.push(buf.top()->GetValue());
+						buf.pop();
+						if (buf.length() == 0)
+							break;
+						top = respect.find((char)buf.top()->GetValue());
+					}
+				}
+			}
+			buf.push((int)in_str[i]);
+			break;
+		}
+		case '*': {
+			it = respect.find('*');
+			if (buf.length() != 0) {
+				auto top = respect.find((char)buf.top()->GetValue());
+				if (buf.top()->GetValue() != 40) {
+					while ((it->second <= top->second)) {
+						out.push(buf.top()->GetValue());
+						buf.pop();
+						if (buf.length() == 0)
+							break;
+						top = respect.find((char)buf.top()->GetValue());
+					}
+				}
+			}
+			buf.push((int)in_str[i]);
+			break;
+		}
+		case '/': {
+			it = respect.find('/');
+			if (buf.length() != 0) {
+				auto top = respect.find((char)buf.top()->GetValue());
+				if (buf.top()->GetValue() != 40) {
+					while ((it->second <= top->second)) {
+						out.push(buf.top()->GetValue());
+						buf.pop();
+						if (buf.length() == 0)
+							break;
+						top = respect.find((char)buf.top()->GetValue());
+					}
+				}
+			}
+			buf.push((int)in_str[i]);
+			break;
+		}
+		case '\0':
+			break;
+		default:
+			out.push((int)in_str[i]);
+			break;
+		}
+
+	}
+	if (buf.length() > 0) {
+		int len = buf.length();
+		for (int j = 0; j < len; j++) {
+			out.push(buf.top()->GetValue());
+			buf.pop();
+		}
+	}
+
+	int j = out.sizeArr();
+	for (int i = 0; i < j; i++) {
+		cout << (char)out.front();
+		out.pop();
+	}
+	cout << endl;
+	int k = buf.length();
+	for (int i = 0; i < k; i++) {
+		cout << (char)buf.top()->GetValue();
+		buf.pop();
+	}
+
+	cout << endl << endl << endl;
+	system("pause");
+	cout << "Enter any key for finish....."<< endl; 
+}
+	
+
+
+
+

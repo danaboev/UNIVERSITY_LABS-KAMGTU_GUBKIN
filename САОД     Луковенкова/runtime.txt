@@ -1,0 +1,20 @@
+
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <ctime>
+#include <windows.h>
+#include <chrono>
+#include <algorithm>
+
+
+
+  auto start = chrono::steady_clock::now();
+
+fjkfdkjfdlkfj
+
+
+auto stop = chrono::steady_clock::now();
+    auto ns = chrono::duration_cast<chrono::nanoseconds>(stop - start);
+    cout << "runtime  = " << ns.count() << " nanosec" << endl;

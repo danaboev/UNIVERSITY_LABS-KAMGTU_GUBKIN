@@ -1,0 +1,369 @@
+
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <ctime>
+#include <windows.h>
+#include <chrono>
+#include <algorithm>
+
+using namespace std;
+
+int y, j, key;
+int i;
+
+
+
+
+//Сортировка вставками / Insertion sort
+void insertionsort(int* l, int* r) {
+
+    auto start = chrono::steady_clock::now();
+    for (int* i = l + 1; i < r; i++) {
+        int* j = i;
+        while (j > l&&* (j - 1) > * j) {
+            swap(*(j - 1), *j);
+            j--;
+        }
+    }
+    auto stop = chrono::steady_clock::now();
+    auto ns = chrono::duration_cast<chrono::nanoseconds>(stop - start);
+    cout << "runtime  = " << ns.count() << " nanosec" << endl;
+}
+
+///выборочная
+void selectionsort(int* l, int* r) {
+
+    auto start = chrono::steady_clock::now();
+
+    for (int* i = l; i < r; i++) {
+        int minz = *i;
+        int* ind = i;
+        for (int* j = i + 1; j < r; j++)
+        {
+            if (*j < minz) {
+                minz = *j;
+                ind = j;
+            }
+        }
+        swap(*i, *ind);
+    }
+    auto stop = chrono::steady_clock::now();
+    auto ns = chrono::duration_cast<chrono::nanoseconds>(stop - start);
+    cout << "runtime  = " << ns.count() << " nanosec" << endl;
+}
+
+/////пузырьками 
+void bubblesort(int* l, int* r) {
+
+    auto start = chrono::steady_clock::now();
+
+    int sz = r - l;
+    if (sz <= 1) return;
+    bool b = true;
+    while (b) {
+        b = false;
+        for (int* i = l; i + 1 < r; i++) {
+            if (*i > * (i + 1)) {
+                swap(*i, *(i + 1));
+                b = true;
+            }
+        }
+        r--;
+    }
+    auto stop = chrono::steady_clock::now();
+    auto ns = chrono::duration_cast<chrono::nanoseconds>(stop - start);
+    cout << "runtime  = " << ns.count() << " nanosec" << endl;
+}
+
+
+//быстрая сортировка
+void quicksort(int* l, int* r) {
+
+    auto start = chrono::steady_clock::now();
+
+    if (r - l <= 1) return;
+    int z = *(l + (r - l) / 2);
+
+    int* ll = l, * rr = r - 1;
+    while (ll <= rr)
+    {
+        while (*ll < z) ll++;
+        while (*ll > z) rr--;
+        if (ll <= rr) {
+            swap(*ll, *rr);
+            ll++;
+            rr--;
+        }
+    }
+
+    if (l < rr) quicksort(l, rr + 1);
+    if (ll < r) quicksort(ll, r);
+
+    auto stop = chrono::steady_clock::now();
+    auto ns = chrono::duration_cast<chrono::nanoseconds>(stop - start);
+    cout << "runtime  = " << ns.count() << " nanosec" << endl;
+
+}
+
+
+////слиянием
+void mergesort(int* l, int* r, int* m, int* temp) {
+
+    auto start = chrono::steady_clock::now();
+    int* cl = l, * cr = m, cur = 0;
+    while (cl < m && cr < r) {
+
+        if (*cl < *cr) temp[cur++] = *cl, cl++;
+
+        else  temp[cur++] = *cr, cr++;
+
+    }
+
+    while (cl < m) temp[cur++] = *cl, cl++;
+    while (cl < r) temp[cur++] = *cr, cr++;
+
+    cur = 0;
+    for (int* i = l; i < r; i++)
+        *i = temp[cur++];
+
+    auto stop = chrono::steady_clock::now();
+    auto ns = chrono::duration_cast<chrono::nanoseconds>(stop - start);
+    cout << "runtime  = " << ns.count() << " nanosec" << endl;
+
+}
+
+//сортировка подсчет
+void countingsort(int* a, int n, int k)
+{
+    int* c = new int[k];
+    auto start = chrono::steady_clock::now();
+    for (int i = 0; i < k; i++) {
+        c[i] = 0;
+    }
+    for (int i = 0; i < n; i++) {
+        c[a[i] - 1] = c[a[i] - 1] + 1;
+    }
+
+    int i = 0;
+    for (int j = 0; j < k; j++)
+    {
+        while (c[j] != 0) {
+
+            a[i] = j + 1;
+            c[i]--;
+            i++;
+        }
+    }
+    auto stop = chrono::steady_clock::now();
+    auto ns = chrono::duration_cast<chrono::nanoseconds>(stop - start);
+    cout << "runtime  = " << ns.count() << " nanosec" << endl;
+    delete[] c;
+}
+
+
+///Пирамидальная сортировка / Heapsort 
+template <class T>
+class heap {               ////здесь у меня что то не так вы мне сказали сори  уже не помню
+public:
+    int size() {
+        return n;
+    }
+    int top() {
+        return h[0];
+    }
+    bool empty() {
+        return n == 0;
+    }
+    void push(T a) {
+        h.push_back(a);
+        SiftUp(n);
+        n++;
+    }
+    void pop() {
+        n--;
+        swap(h[n], h[0]);
+        h.pop_back();
+        SiftDown(0);
+    }
+    void clear() {
+        h.clear();
+        n = 0;
+    }
+    T operator [] (int a) {
+        return h[a];
+    }
+private:
+    vector <T> h;
+    int n = 0;
+    void SiftUp(int a) {
+        while (a) {
+            int p = (a - 1) / 2;
+            if (h[p] > h[a]) swap(h[p], h[a]);
+            else break;
+            a--; a /= 2;
+        }
+    }
+    void SiftDown(int a) {
+        while (2 * a + 1 < n) {
+            int l = 2 * a + 1, r = 2 * a + 2;
+            if (r == n) {
+                if (h[l] < h[a]) swap(h[l], h[a]);
+                break;
+            }
+            else if (h[l] <= h[r]) {
+                if (h[l] < h[a]) {
+                    swap(h[l], h[a]);
+                    a = l;
+                }
+                else break;
+            }
+            else if (h[r] < h[a]) {
+                swap(h[r], h[a]);
+                a = r;
+            }
+            else break;
+        }
+    }
+};
+void heapsort(int* l, int* r) {
+    heap<int> h;
+    auto start = chrono::steady_clock::now();
+
+    for (int* i = l; i < r; i++) h.push(*i);
+    for (int* i = l; i < r; i++) {
+        *i = h.top();
+        h.pop();
+    }
+    auto stop = chrono::steady_clock::now();
+    auto ns = chrono::duration_cast<chrono::nanoseconds>(stop - start);
+    cout << "runtime  = " << ns.count() << " nanosec" << endl;
+
+}
+
+
+//Поразрядная сортировка / Radix sort
+int digit(int n, int k, int N, int M) {
+    return (n >> (N * k)& (M - 1));
+}
+
+void _radixsort(int* l, int* r, int N) {
+    int k = (32 + N - 1) / N;
+    int M = 1 << N;
+    int sz = r - l;
+    int* b = new int[sz];
+    int* c = new int[M];
+
+    auto start = chrono::steady_clock::now();
+
+    for (int i = 0; i < k; i++) {
+        for (int j = 0; j < M; j++)
+            c[j] = 0;
+        for (int* j = l; j < r; j++)
+            c[digit(*j, i, N, M)]++;
+        for (int j = 1; j < M; j++)
+            c[j] += c[j - 1];
+        for (int* j = r - 1; j >= l; j--)
+            b[--c[digit(*j, i, N, M)]] = *j;
+        int cur = 0;
+        for (int* j = l; j < r; j++)
+            *j = b[cur++];
+    }
+    delete b;
+    delete c;
+
+    auto stop = chrono::steady_clock::now();
+    auto ns = chrono::duration_cast<chrono::nanoseconds>(stop - start);
+    cout << "runtime  = " << ns.count() << " nanosec" << endl;
+}
+
+void radixsort(int* l, int* r) {
+    _radixsort(l, r, 8);
+}
+
+void Show(int* A, int N) {
+    for (int i = 0; i < N; i++)
+        cout << A[i] << " ";
+    cout << endl << endl;
+}
+
+int main()
+{
+    int n;
+    cout << "Inter size of massiv: ";
+    cin >> n;
+
+    int* A1 = new int[n];
+    for (int i = 0; i < n; ++i)
+        A1[i] = i + 1;
+    random_shuffle(A1, A1 + n);
+
+    int* A2 = new int[n];
+    for (int i = 0; i < n; ++i)
+        A2[i] = A1[i];
+
+    int* A3 = new int[n];
+    for (int i = 0; i < n; ++i)
+        A3[i] = A1[i];
+
+    int* A4 = new int[n];
+    for (int i = 0; i < n; ++i)
+        A4[i] = A1[i];
+
+    int* A5 = new int[n];
+    for (int i = 0; i < n; ++i)
+        A5[i] = A1[i];
+
+    int* A6 = new int[n];
+    for (int i = 0; i < n; ++i)
+        A6[i] = A1[i];
+
+
+    int* A7 = new int[n];
+    for (int i = 0; i < n; ++i)
+        A7[i] = A1[i];
+
+    int* A8 = new int[n];
+    for (int i = 0; i < n; ++i)
+        A8[i] = A1[i];
+        
+
+
+    cout << "Before sort (first 10 el): ";
+    Show(A1, 10);
+
+    cout << "Insertion Sort:\n";
+    insertionsort(A1, A1 + n);
+    Show(A1, 10);
+
+    cout << "Selection Sort:\n";
+    selectionsort(A2, A2 + n);
+    Show(A2, 10);
+
+    cout << "Bubble Sort:\n";
+    bubblesort(A3, A3 + n);
+    Show(A3, 10);
+
+    cout << "Quick Sort:\n";
+    quicksort(A4, A4 + n);
+    Show(A4, 10);
+
+    cout << "Merge Sort:\n";
+    mergesort(A5, A5 + n);
+    Show(A5, 10);
+
+    cout << "Count  Sort:\n";
+    countingsort(A6, A6 + n);
+    Show(A6, 10);
+
+    cout << "Heap Sort:\n";
+    heapsort(A7, A7 + n);
+    Show(A7, 10);
+
+    cout << "Radix Sort:\n";
+    _radixsort(A8, A8 + n);
+    Show(A8, 10);
+    return 0;
+}
+

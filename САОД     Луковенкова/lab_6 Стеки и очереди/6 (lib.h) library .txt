@@ -1,0 +1,463 @@
+#include <stdlib.h>
+#include <iostream>
+#define NaN 0
+
+using namespace std;
+class arrStack {
+private:
+	int* body;
+	int N;
+	int Top;
+public:
+	arrStack() {
+		Top = -1;
+		N = 50;
+		body = (int*)malloc(N * sizeof(int));
+	}
+	~arrStack() {
+		delete[] body;
+	}
+	int top() {
+		if (Top >= 0)
+			return body[Top];
+		else {
+			cout << "\nStack is empty:" << endl;
+			return NaN;
+		}
+	}
+	void push(int val) {
+		if (Top < N - 1)
+			Top++;
+		else
+			cout << "Error TOP --- Sorry ---" << endl;
+		body[Top] = val;
+	}
+	void pop() {
+		if (Top >= 0)
+			Top--;
+	}
+	int size() {
+		return Top + 1;
+	}
+	bool isEmpty() {
+		if (Top == -1)
+			return true;
+		else
+			return false;
+	}
+	void out() {
+		cout << "\nStack: ";
+		for (int i = 0; i <= Top; i++)
+			cout << body[i] << ", ";
+		cout << "\b\b ";
+	}
+};
+
+class Node {
+private:
+	int value;
+	Node* next;
+public:
+	Node() {
+		next = NULL;
+	}
+	~Node() {
+		if (next)
+			delete next;
+	}
+	void SetNext(Node* n) { next = n; }
+	Node* GetNext() { return next; }
+	void SetValue(int val) { value = val; }
+	int GetValue() { return value; }
+};
+
+class Stack {
+private:
+	Node* Top;
+	int size;
+public:
+	Stack() {
+		Top = NULL;
+		size = 0;
+	}
+	~Stack() {
+		delete Top;
+	}
+	Node* top() {
+		if (Top != NULL)
+			return Top;
+		else
+			return NULL;
+	}
+	void push(int val) {
+		if (Top == NULL) {
+			Node* node;
+			node = (Node*)malloc(sizeof(Node));
+			node->SetNext(NULL);
+			node->SetValue(val);
+			Top = node;
+		}
+		else {
+			Node* node;
+			node = (Node*)malloc(sizeof(Node));
+			node->SetNext(Top);
+			node->SetValue(val);
+			Top = node;
+		}
+		size++;
+	}
+	void pop() {
+		if (Top != NULL) {
+			Node* node = Top->GetNext();
+			Top->SetNext(NULL);
+			delete Top;
+			Top = node;
+			size--;
+		}
+	}
+	bool isEmpty() {
+		if (size == 0)
+			return true;
+		else
+			return false;
+	}
+	int length() {
+		return size;
+	}
+	void out(Node* node) {
+		if (node->GetNext() != NULL)
+			out(node->GetNext());
+		cout << node->GetValue() << ", ";
+	}
+};
+
+class Queue {
+private:
+	int* body;
+	int N;
+	int Back;
+public:
+	Queue() {
+		N = 50;
+		Back = 0;
+		body = (int*)malloc(N * sizeof(int));
+	}
+	~Queue() {
+		delete[] body;
+	}
+	int front() {//return first
+		if (Back > 0)
+			return body[0];
+		else
+			return NULL;
+	}
+	int back() {//return last
+		if (Back > 0)
+			return body[Back - 1];
+		else
+			return NULL;
+	}
+	void push(int val) {//add item
+		if (Back < N) {
+			body[Back] = val;
+			Back++;
+		}
+	}
+	void pop() {//delete item
+		if (Back > 0)
+			Back--;
+		else return;
+		for (int i = 0; i < Back; i++)
+			body[i] = body[i + 1];
+	}
+	int size() {
+		return Back;
+	}
+	bool isEmpty() {//check for emptiness
+		if (Back != 0)
+			return false;
+		else
+			return true;
+	}
+	void out() {
+		for (int i = 0; i < Back; i++)
+			cout << body[i] << ", ";
+		cout << "\b\b " << endl;
+	}
+};
+
+class ringQueue {
+private:
+	int* body;
+	int N;
+	int Front;
+	int Back;
+public:
+	ringQueue() {
+		Front = Back = 0;
+		N = 50;
+		body = (int*)malloc(N * sizeof(int));
+	}
+	~ringQueue() {
+		delete[] body;
+	}
+	int front() {
+		if (Front != Back)
+			return body[Front];
+		else
+			return NaN;
+	}
+	int back() {
+		if (Front != Back)
+			return body[(Back + N - 1) % N];
+		else
+			return NULL;
+	}
+	void push(int val) {
+		if ((Back + 1) % N != Front) {
+			body[Back] = val;
+			Back = (Back + 1) % N;
+		}
+		else
+			return;
+	}
+	void pop() {
+		if (Front != Back)
+			Front = (Front + 1) % N;
+	}
+	int size() {
+		if (Front < Back)
+			return Back - Front;
+		else if (Back < Front)
+			return Back + Front - 1;
+		else
+			return Back - N + Front;
+	}
+	bool isEmpty() {
+		if (Front == Back)
+			return true;
+		else
+			return false;
+	}
+	void out() {
+		if (Front < Back) {
+			for (int i = Front; i < Back; i++)
+				cout << body[i] << ", ";
+		}
+		else if (Front > Back) {
+			for (int i = Front; i < N; i++)
+				cout << body[i] << ", ";
+			for (int i = 0; i <= Back; i++)
+				cout << body[i] << ", ";
+			
+		}
+		cout << "\b\b " << endl;
+	}
+};
+
+class sNode {
+private:
+	int value;
+	sNode* next;
+public:
+	void SetNext(sNode* n) { next = n; }
+	sNode* GetNext() { return next; }
+	void SetValue(int val) { value = val; }
+	int GetValue() { return value; }
+};
+
+class arrQueue {
+private:
+	sNode* Front;
+	sNode* Back;
+	int size;
+	void Out(sNode* node) {
+		cout << node->GetValue() << ", ";
+		if (node->GetNext() != NULL)
+			Out(node->GetNext());
+	}
+public:
+	arrQueue() {
+		size = 0;
+		Front = Back = NULL;
+	}
+	~arrQueue() {
+		delete Front;
+	}
+	int front() {
+		if (Front != NULL)
+			return Front->GetValue();
+		else
+			return NaN;
+	}
+	int back() {
+		if (Back != NULL)
+			return Back->GetValue();
+		else
+			return NaN;
+	}
+	void push(int val) {
+		if (Front == NULL) {
+			sNode* node = (sNode*)malloc(sizeof(sNode));
+			node->SetNext(NULL);
+			node->SetValue(val);
+			Front = node;
+			Back = Front;
+		}
+		else {
+			sNode* node = (sNode*)malloc(sizeof(sNode));
+			node->SetNext(NULL);
+			node->SetValue(val);
+			Back->SetNext(node);
+			Back = node;
+		}
+		size++;
+	}
+	void pop() {
+		if (Front != NULL) {
+			sNode* node = Front;
+			Front = Front->GetNext();
+			delete node;
+			size--;
+		}
+	}
+	int sizeArr() {
+		return size;
+	}
+	bool isEmpty() {
+		if (Front == NULL)
+			return true;
+		else
+			return false;
+	}
+	void out() {
+		if (Front != NULL)
+			Out(Front);
+		cout << "\b\b ";
+	}
+};
+
+
+//function for bank
+class client {
+private:
+	int talon;
+	int serviceTime;
+	client* next;
+public:
+	void SetNext(client* n) { next = n; }
+	client* GetNext() { return next; }
+	void SetTalon(int val) { talon = val; }
+	int GetTalon() { return talon; }
+	void SetServiceTime(int time) { serviceTime = time; }
+	int GetTime() { return serviceTime; }
+};
+
+class bQueue {
+private:
+	client* Front;
+	client* Back;
+	int size;
+	void Out(client* node) {
+		cout << node->GetTalon() << " client (" << node->GetTime() << " minutes)" << endl;
+		if (node->GetNext() != NULL)
+			Out(node->GetNext());
+	}
+	void decr(client* node) {
+		node->SetServiceTime(node->GetTime() - 1);
+		if (node->GetNext() != NULL) {
+			decr(node->GetNext());
+		}
+	}
+public:
+	bQueue() {
+		size = 0;
+		Front = Back = NULL;
+	}
+	~bQueue() {
+		delete Front;
+	}
+	client* front() {
+		if (Front != NULL)
+			return Front;
+		else
+			return NULL;
+	}
+	int back() {
+		return Back->GetTalon();
+	}
+	void push(int tal, int time) {
+		if (Front == NULL) {
+			client* node = (client*)malloc(sizeof(client));
+			node->SetNext(NULL);
+			node->SetTalon(tal);
+			node->SetServiceTime(time);
+			Front = node;
+			Back = Front;
+		}
+		else {
+			client* node = (client*)malloc(sizeof(client));
+			node->SetNext(NULL);
+			node->SetTalon(tal);
+			node->SetServiceTime(time);
+			Back->SetNext(node);
+			Back = node;
+		}
+		size++;
+	}
+	void pop() {
+		if (Front != NULL) {
+			client* node = Front;
+			Front = Front->GetNext();
+			delete node;
+			size--;
+		}
+	}
+	int sizeArr() {
+		return size;
+	}
+	bool isEmpty() {
+		if (Front == NULL)
+			return true;
+		else
+			return false;
+	}
+	void decrem() {
+		if (Front != NULL)
+			decr(Front);
+	}
+	void out() {
+		if (Front != NULL)
+			Out(Front);
+		cout << "\b\b " << endl;
+	}
+};
+
+void outTime(int minutes) {
+	cout << endl;
+
+	int hour = minutes / 60;
+	int min = minutes % 60;
+	if (hour - 10 < 0)//output ime
+		cout << "0" << hour << ":";
+	else
+		cout << hour << ":";
+	if (min - 10 < 0)
+		cout << "0" << min << endl;
+	else
+		cout << min << "\t" << endl;
+}
+
+//about personals
+void infClientsAndWorkers(arrQueue* workers, bQueue* clients) {
+	cout << "\tQueue" << clients->sizeArr() << " customers ";
+	if (workers->sizeArr() != 0) {
+		workers->out();
+		cout << "Employe(personal) are fre" << endl;
+	}
+	else
+		cout << "All employees(personals) are busy";
+	cout << "Enter any key for finish.... ";
+
+}
+

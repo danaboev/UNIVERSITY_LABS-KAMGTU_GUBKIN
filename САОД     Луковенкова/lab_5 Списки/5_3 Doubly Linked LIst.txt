@@ -1,0 +1,211 @@
+#include <iostream>
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctime>
+#include <windows.h>
+#include <chrono>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <list>
+
+using namespace std;
+
+class Node3 {
+private:
+	int value;
+	Node3* next;
+	Node3* prev;
+public:
+	Node3(int v, Node3* n, Node3* p) {
+		if (!p)
+			p = NULL;
+		value = v;
+		next = n;
+		prev = p;
+	}
+	~Node3() {
+		if (next)
+			delete next;
+	}
+	void SetNext(Node3* n) {
+		next = n;
+	}
+	void SetValue(int val) {
+		value = val;
+	}
+	void SetPrev(Node3* n) {
+		if (n == NULL) {
+			prev->value = NULL;
+		}
+		else
+			prev = n;
+	}
+	Node3* GetNext() {
+		return next;
+	}
+	Node3* GetPrev() {
+		return prev;
+	}
+	int GetValue() {
+		return value;
+	}
+};
+
+class DoublyLinkedList {
+private:
+	Node3* head;
+	int size;
+public:
+	DoublyLinkedList() {
+		head = NULL;
+		size = 0;
+	}
+	~DoublyLinkedList() {
+		if (head)
+			delete head;
+	}
+	void Insert(Node3* after, int val) {
+		Node3* n;
+		if (after == NULL) {
+			n = new Node3(val, head, NULL);
+			if (head)
+				head->SetPrev(n);
+			head = n;
+		}
+		else {
+			n = new Node3(val, after->GetNext(), after);
+			after->SetNext(n);
+			if (n)
+				n->SetPrev(n);
+		}
+		size = size + 1;
+	}
+	void Delete(Node3* n) {
+		if ((n == head) || (n == NULL)) {
+			Node3* newhead = n->GetNext();
+			newhead->SetPrev(NULL);
+			n->SetNext(n->GetNext()->GetPrev());
+			delete n;
+			head = newhead;
+		}
+		/*else if(size=12){
+			Node3* t=n->GetPrev();
+			t->SetNext(NULL);
+			n->SetPrev(n->GetNext()->GetPrev());
+			delete n;
+		}*/
+		else {
+			Node3* p = n->GetPrev();
+			p->SetNext(n->GetNext());
+			n->GetNext()->SetPrev(p);
+			n->SetNext(NULL);
+			delete n;
+		}
+		size = size - 1;
+	}
+	Node3* LookValue(int val) {
+		Node3* n = head;
+		while ((n != NULL) && (n->GetValue() != val))
+			n = n->GetNext();
+		return n;
+	}
+	Node3* LookPos(int pos) {
+		if ((pos < 0) || (pos > ((DoublyLinkedList::size) - 1)))
+			return NULL;
+		Node3* n = head;
+		if (pos == 0)
+			return n->GetNext()->GetPrev();
+		for (int i = 1; i < pos; i++)
+			n = n->GetNext();
+		return n->GetNext();
+	}
+	Node3* Next(Node3* n) {
+		return n->GetNext();
+	}
+	Node3* Prev(Node3* n) {
+		return n->GetPrev();
+	}
+	int Lenght() {
+		return size;
+	}
+	void Show() {
+		Node3* i = head;
+		while (i != NULL) {
+			cout << i->GetValue() << "_";
+			i = i->GetNext();
+		}
+		cout << endl;
+	}
+};
+
+
+int main() {
+	int arr1 = 10;
+	int arr2 = 10,r;
+
+		DoublyLinkedList DoubLL;
+	cout << "\nDoubly Linked List  >>>> 5_3_lab:";
+	for (int i = 0; i < arr1; i++) {
+		DoubLL.Insert(NULL, (i + 1)); //after = NULL => вставляем в начало, должно получиться 10 9 8 7 ... 1
+	}
+	cout << "\List:	";
+	DoubLL.Show();
+
+	Node3* n = DoubLL.LookValue(NULL);
+	Node3* n1 = DoubLL.LookValue(1);
+	Node3* n2 = DoubLL.LookValue(5);
+	DoubLL.Insert(n, 0);
+	DoubLL.Insert(n1, 11);
+	DoubLL.Insert(n2, 100);
+	cout << "List after insertion <beginning> ,<end>,<middle> > > :	";
+	DoubLL.Show();
+
+	Node3* n3 = DoubLL.LookPos(NULL);
+	Node3* n13 = DoubLL.LookPos(7);
+	Node3* n23 = DoubLL.LookPos(12);
+
+	DoubLL.Delete(n3);
+	DoubLL.Delete(n13);
+	DoubLL.Delete(n23);
+	cout << "List after deletion <<beginning>> -- <middle> -- <end>  >>:	";
+	DoubLL.Show();
+
+	cout << "LIst lenght  :	" << DoubLL.Lenght() << "\n";
+
+	int H1[] = { 4, 110 };
+	int Q = 0;
+	for (int i = 0; i < 2; i++) {
+		if (H1[i] <= DoubLL.Lenght()) {
+			Node3* p = DoubLL.LookValue(H1[i]);
+			while (DoubLL.LookPos(Q)->GetValue() != p->GetValue()) {
+				Q++;
+				if (DoubLL.LookPos(Q)->GetValue() == p->GetValue())
+					cout << "Value:	" << H1[i] << "\t Item index:	" << Q - 1 << endl;
+				if (Q > 20)
+					break;
+			}
+
+		}
+		else
+			cout << "Value:	" << H1[i] << "\tNo, Sorry...." << endl;
+	}
+	int H[] = { 5, 7 };
+	for (int i = 0; i < 2; i++) {
+		if (H[i] <= DoubLL.Lenght()) {
+			Node3* p1 = DoubLL.LookPos(H[i]);
+			cout << "Elamant number : <<<" << H[i] << ">>>" << p1->GetValue() << endl;
+		}
+		else
+			cout << "\n Position as : <<" << H[i] << ">>  No,Sorry.....!!!\n\n" << endl;
+	}
+
+	cout << "prev  item 4 :  " << DoubLL.Prev(DoubLL.LookPos(4))->GetValue() << endl;
+	cout << "next  item  4 :  "  << DoubLL.Next(DoubLL.LookPos(4))->GetValue() << endl;
+
+	_getch();
+	return 0;
+
+cout << " Press any key for finish ...." <<  endl;
+}

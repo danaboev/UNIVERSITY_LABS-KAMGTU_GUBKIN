@@ -1,0 +1,42 @@
+#include <iostream>
+#include <stdlib.h>
+#include <conio.h>
+#include <algorithm>
+#include "lib.h"
+using namespace std;
+
+void main() {
+	int const M = 8;
+	int arrA[M] = { 10,5,7,1,20,18,19,24 };
+	int arrB[M] = { 10,18,56,17,7,5,19,30 };
+
+	Tree treeA;
+	Tree treeB;
+	Tree treeC;
+	Tree treeD;
+	for (int i = 0; i < M; i++) {
+		treeA.addNode(arrA[i]);
+		treeB.addNode(arrB[i]);
+		treeC.addNode(arrA[i]);
+		treeD.addNode(arrB[i]);
+	}
+	cout << "\n\nTree A: ";
+	treeA.show();
+	cout << "Tree B: ";
+	treeB.show();
+
+	treeA.ob(&treeB);
+	cout << "\nObed: ";
+	treeA.show();
+
+	cout << "Peres: ";
+	treeC.peres(&treeD);
+	treeC.show();
+
+	cout << endl << endl << endl << endl;
+
+	cout << endl << endl << endl;
+	system("pause");
+	cout << "Enter any key for finish >>>>" << endl;
+}
+

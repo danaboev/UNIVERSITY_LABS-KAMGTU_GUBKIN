@@ -1,0 +1,32 @@
+C:\Users\Jakhongir\Desktop\Tests+\Tests\bin\Release\Tests.exe.config
+C:\Users\Jakhongir\Desktop\Tests+\Tests\bin\Release\Tests.exe
+C:\Users\Jakhongir\Desktop\Tests+\Tests\bin\Release\Tests.pdb
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Release\Tests.csproj.AssemblyReference.cache
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Release\Tests.AddTests.resources
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Release\Tests.AuthForm.resources
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Release\Tests.CreateTest.resources
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Release\Tests.FormMain.resources
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Release\Tests.Properties.Resources.resources
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Release\Tests.Registration.resources
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Release\Tests.SelectTest.resources
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Release\Tests.TestingForm.resources
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Release\Tests.csproj.GenerateResource.cache
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Release\Tests.csproj.CoreCompileInputs.cache
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Release\Tests.exe
+C:\Users\Jakhongir\Desktop\Tests+\Tests\obj\Release\Tests.pdb
+e:\камчатгту\кгту4- курс\диплом защищено\готово+++\Tests\Tests\bin\Release\Tests.exe.config
+e:\камчатгту\кгту4- курс\диплом защищено\готово+++\Tests\Tests\bin\Release\Tests.exe
+e:\камчатгту\кгту4- курс\диплом защищено\готово+++\Tests\Tests\bin\Release\Tests.pdb
+e:\камчатгту\кгту4- курс\диплом защищено\готово+++\Tests\Tests\obj\Release\Tests.csproj.AssemblyReference.cache
+e:\камчатгту\кгту4- курс\диплом защищено\готово+++\Tests\Tests\obj\Release\Tests.AddTests.resources
+e:\камчатгту\кгту4- курс\диплом защищено\готово+++\Tests\Tests\obj\Release\Tests.AuthForm.resources
+e:\камчатгту\кгту4- курс\диплом защищено\готово+++\Tests\Tests\obj\Release\Tests.CreateTest.resources
+e:\камчатгту\кгту4- курс\диплом защищено\готово+++\Tests\Tests\obj\Release\Tests.FormMain.resources
+e:\камчатгту\кгту4- курс\диплом защищено\готово+++\Tests\Tests\obj\Release\Tests.Properties.Resources.resources
+e:\камчатгту\кгту4- курс\диплом защищено\готово+++\Tests\Tests\obj\Release\Tests.Registration.resources
+e:\камчатгту\кгту4- курс\диплом защищено\готово+++\Tests\Tests\obj\Release\Tests.SelectTest.resources
+e:\камчатгту\кгту4- курс\диплом защищено\готово+++\Tests\Tests\obj\Release\Tests.TestingForm.resources
+e:\камчатгту\кгту4- курс\диплом защищено\готово+++\Tests\Tests\obj\Release\Tests.csproj.GenerateResource.cache
+e:\камчатгту\кгту4- курс\диплом защищено\готово+++\Tests\Tests\obj\Release\Tests.csproj.CoreCompileInputs.cache
+e:\камчатгту\кгту4- курс\диплом защищено\готово+++\Tests\Tests\obj\Release\Tests.exe
+e:\камчатгту\кгту4- курс\диплом защищено\готово+++\Tests\Tests\obj\Release\Tests.pdb

@@ -1,0 +1,494 @@
+#include<iostream>
+#include<locale.h>
+#include<conio.h>
+#include<ctime>
+#include<windows.h>
+#include <stdlib.h>
+#include <algorithm>
+
+using namespace std;
+
+/*class List{
+private:
+	int *body;
+	int maxsize;
+	int last;
+public:
+	List(){
+		maxsize=50;
+		body= new int[maxsize];
+		last = 0;
+	}
+	~List(){
+		free(body);
+	}
+	int Insert(int pos, int val){
+		if(last==maxsize-1)
+			return -1;
+		if((pos<0)||(pos>last))
+			return -1;
+		for(int j=last; j>=pos;j--)
+			body[j+1]=body[j];
+		body[pos]=val;
+		last=last+1;
+	}
+	int Delete(int pos){
+		if(last==0)
+			return -1;
+		if((pos<0)||(pos>last))
+			return -1;
+		for(int j=pos+1; j<=last; j++)
+			body[j-1]=body[j];
+		last=last-1;
+	}
+	int LookValue(int val){
+		for(int i=0; i<=last; i++){
+			if(body[i]==val){
+				return i;
+			}
+		}
+		return -1;
+	}
+	int LookPos(int pos){
+		int I=-1;
+		if((pos<0)||(pos>last-1))
+			return I;
+		return body[pos];
+	}
+	int Next(int pos){
+		int I=-1;
+		if((pos<0)||(pos>=last-1))
+			return I;
+		return body[pos+1];
+	}
+	int Prev(int pos){
+		if((pos<=0)||(pos>last-1))
+			return -1;
+		return body[pos-1];
+	}
+	int Lenght(){
+		return last;
+	}
+};
+
+class Node{
+private:
+	int value;
+	Node *next;
+public:
+	Node(int v, Node* n){
+		value = v;
+		next = n;
+	}
+	~Node(){
+		if(next)
+			delete next;
+	}
+	void SetNext(Node *n){
+		next=n;
+	}
+	Node *GetNext(){
+		return next;
+	}
+	void SetValue(int val){
+		value=val;
+	}
+	int GetValue(){
+		return value;
+		if(!value)
+			return -1;
+	}
+};
+
+class SinglyLinkedList{
+private:
+	Node *head;
+	int size;
+public:
+	SinglyLinkedList(){
+		head = NULL;
+		size=0;
+	}
+	~SinglyLinkedList(){
+		if (head) delete head;
+	}
+	void Insert(Node *after, int val){
+		Node *n;
+		if(after==NULL){
+			n=new Node(val, head);
+			head=n;
+		}
+		else{
+			n=new Node(val, after->GetNext());
+			after->SetNext(n);
+		}
+		size=size+1;
+	}
+	
+	void Delete(Node *n){
+		if(n==head){
+			head=n->GetNext();
+			n->SetNext(NULL);
+			delete n;
+		}
+		else{
+			Node *p = Prev(n);
+			p->SetNext(n->GetNext());
+			n->SetNext(NULL);
+			delete n;
+		}
+		size=size-1;
+	}
+	
+	Node *LookValue(int val){
+		Node* n=head;
+		while( n!=NULL && n->GetValue()!=val ) 
+			n=n->GetNext();
+		return n;
+	}
+	
+	Node *LookPos(int pos){
+		if((pos<0)||(pos>size-1))
+			return NULL;
+		Node *n =head;
+		for(int i=0; i<pos; i++)
+			n=n->GetNext();
+		return n;
+	}
+	
+	Node *Next(Node *n){
+		return n->GetNext();
+	}
+	
+	Node *Prev(Node *n){
+		if(n==head)
+			return NULL;
+		Node *i = head;
+		while( i!=NULL && i->GetNext()!=n)
+			i=i->GetNext();
+		return i;
+	}
+	
+	int Lenght(){
+		return size;
+	}
+	
+	void Show(){
+		Node *i = head;
+		while (i!=NULL){
+			cout << i->GetValue() << " ";
+			i = i->GetNext();
+		}
+		cout << endl;
+	}
+};*/
+
+class Node3{
+private:
+	int value;
+	Node3 *next;
+	Node3 *prev;
+public:
+	Node3(int v, Node3* n, Node3* p){
+		if(!p)
+			p=NULL;
+		value=v;
+		next=n;
+		prev=p;
+	}
+	~Node3(){
+		if(next)
+			delete next;
+	}
+	void SetNext(Node3 *n){
+		next=n;
+	}
+	void SetValue(int val){
+		value=val;
+	}
+	void SetPrev(Node3 *n){
+		if(n==NULL){
+			prev->value=NULL;
+		}
+		else
+			prev=n;
+	}
+	Node3 *GetNext(){
+		return next;
+	}
+	Node3 *GetPrev(){
+		return prev;
+	}
+	int GetValue(){
+		return value;
+	}
+};
+
+class DoublyLinkedList{
+private:
+	Node3 *head;
+	int size;
+public:
+	DoublyLinkedList(){
+		head=NULL;
+		size=0;
+	}
+	~DoublyLinkedList(){
+		if(head)
+			delete head;
+	}
+	void Insert(Node3 *after, int val){
+		Node3 *n;
+		if(after==NULL){
+			n =new Node3(val, head, NULL);
+			if(head)
+				head->SetPrev(n);
+			head=n;
+		}
+		else{
+			n=new Node3(val, after->GetNext(), after);
+			after->SetNext(n);
+			if(n)
+				n->SetPrev(n);
+		}
+		size=size+1;
+	}
+	void Delete(Node3 *n){
+		if((n==head)||(n==NULL)){
+			Node3 *newhead=n->GetNext();
+			newhead->SetPrev(NULL);
+			n->SetNext(n->GetNext()->GetPrev());
+			delete n;
+			head=newhead;
+		}
+		/*else if(size=12){
+			Node3* t=n->GetPrev();
+			t->SetNext(NULL);
+			n->SetPrev(n->GetNext()->GetPrev());
+			delete n;
+		}*/
+		else{
+			Node3 *p = n->GetPrev();
+			p->SetNext(n->GetNext());
+			n->GetNext()->SetPrev(p);
+			n->SetNext(NULL);
+			delete n;
+		}
+		size= size-1;
+	}
+	Node3 *LookValue(int val){
+		Node3 *n = head;
+		while((n!=NULL)&&(n->GetValue()!=val))
+			n=n->GetNext();
+		return n;
+	}
+	Node3 *LookPos(int pos){
+		if((pos<0)||(pos>((DoublyLinkedList::size)-1)))
+			return NULL;
+		Node3 *n =head;
+		if(pos==0)
+			return n->GetNext()->GetPrev();
+		for(int i=1; i<pos; i++)
+			n=n->GetNext();
+		return n->GetNext();
+	}
+	Node3 *Next(Node3 *n){
+		return n->GetNext();
+	}
+	Node3 *Prev(Node3 *n){
+		return n->GetPrev();
+	}
+	int Lenght(){
+		return size;
+	}
+	void Show(){
+		Node3 *i = head;
+		while (i!=NULL){
+			cout << i->GetValue() << "_";
+			i = i->GetNext();
+		}
+		cout << endl;
+	}
+};
+
+int main() {
+
+	
+	/////////////список на базе массива:
+	setlocale(LC_ALL, "Russian");
+	/*cout<<"\nСПИСОК НА БАЗЕ МАССИВА:";
+	int Mas=10;
+	List L;
+	for(int i=0; i<Mas; i++){
+		L.Insert(i, i+1);
+	}
+	cout<<"\nначальный массив:	";
+	for(int i=0; i<Mas; i++){
+		int val=L.LookPos(i);
+		cout<<val<<"_";
+	}
+	L.Insert(0,0);
+	L.Insert(Mas+1, 11);
+	L.Insert(((Mas+2)/2), 100);
+	Mas=Mas+3;
+	cout<<"\nмассив после вставки в начало, конец, середину:	";
+	for(int i=0; i<Mas; i++){
+		int val=L.LookPos(i);
+		cout<<val<<"_";
+	}
+	L.Delete(0);
+	L.Delete(Mas-1);
+	L.Delete(((Mas-2)/2));
+	Mas=Mas-3;
+	cout<<"\nмассив после удаления из начала, конца, середины:	";
+	for(int i=0; i<Mas; i++){
+		int val=L.LookPos(i);
+		cout<<val<<"_";
+	}
+	cout<<"\nдлина списка:	"<<L.Lenght()<<"\n";
+	int H2[]={4, 110};
+
+	for(int i=0; i<2; i++){
+		int p=L.LookValue(H2[i]);
+		if(p!=-1)
+			cout<<"значение:	"<<H2[i]<<"\tиндекс элемента:	"<<p<<endl;
+		else
+			cout<<"значение:	"<<H2[i]<<"\tтакого нет в списке!!!"<<endl;
+	}
+	int f=5, s=7;
+	cout<<"элемент под номером("<<f<<")=="<<L.LookPos(f)<<endl;
+	cout<<"элемент под номером("<<s<<")=="<<L.LookPos(s)<<"\n";
+	cout<<"предыдущий 4 элемента ->"<<L.Prev(4)<<endl;
+	cout<<"следуюий 4 элемента ->"<<L.Next(4)<<endl;
+	
+	*/
+
+
+
+	int Mas1=10;//односвязный список
+	int r;
+	/*////////////////////односвязный список:
+	SinglyLinkedList SingL;
+	cout<<"\n\n\nОДНОСВЯЗНЫЙ СПИСОК:";
+	for(int i=0; i<Mas1; i++){
+		SingL.Insert(NULL, (i+1)); //after = NULL => вставляем в начало, должно получиться 10 9 8 7 ... 1
+	}
+	cout<<"\nначальный список:	";
+	SingL.Show();
+	
+	Node *n = SingL.LookValue(NULL);
+	Node *n1 = SingL.LookValue(1);
+	Node *n2 = SingL.LookValue(5);
+	SingL.Insert(n, 0);
+	SingL.Insert(n1, 11);
+	SingL.Insert(n2, 100);
+	cout<<"список после вставки в начало, конец, середину:	";
+	SingL.Show();
+	
+	n = SingL.LookPos(0);
+	n1 = SingL.LookPos(7);
+	n2 = SingL.LookPos(12);
+	
+	SingL.Delete(n);
+	SingL.Delete(n1);
+	SingL.Delete(n2);
+	cout<<"список после удаления из начала, середины, конца:	";
+	SingL.Show();
+
+	cout<<"длина списка:	"<<SingL.Lenght()<<"\n";
+	
+	int H1[]={4, 110};
+	int Q=0;
+	for(int i=0; i<2; i++){
+		if(H1[i]<=SingL.Lenght()){
+			Node  *p=SingL.LookValue(H1[i]);
+			while(SingL.LookPos(Q)->GetValue()!=p->GetValue()){
+				Q++;
+				if(SingL.LookPos(Q)->GetValue()==p->GetValue())
+				cout<<"значение:	"<<H1[i]<<"\tиндекс элемента:	"<<Q-1<<endl;
+				if(Q>20)
+					break;
+			}
+			
+		}
+		else
+			cout<<"значение:	"<<H1[i]<<"\tтакого нет в списке!!!"<<endl;
+	}
+	int H[]={5, 7};
+	for(int i=0; i<2; i++){
+		if(H[i]<=SingL.Lenght()){
+			Node  *p1=SingL.LookPos(H[i]);
+			cout<<"элемент под номером("<<H[i]<<")=="<<p1->GetValue()<<endl;	
+		}
+		else
+			cout<<"\nтакой позиции ("<<H[i]<<") нет в списке!!!\n\n"<<endl;
+	}
+	
+	cout<<"предыдущий 4 элемента ->"<<SingL.Prev(SingL.LookPos(4))->GetValue()<<endl;
+	cout<<"следуюий 4 элемента ->"<<SingL.Next(SingL.LookPos(4))->GetValue()<<endl;
+	*/
+
+	int Mas2=10;
+	///////////////////двусвязный список
+	DoublyLinkedList DoubLL;
+	cout<<"\n\n\nДВУСВЯЗНЫЙ СПИСОК:";
+	for(int i=0; i<Mas1; i++){
+		DoubLL.Insert(NULL, (i+1)); //after = NULL => вставляем в начало, должно получиться 10 9 8 7 ... 1
+	}
+	cout<<"\nначальный список:	";
+	DoubLL.Show();
+	
+	Node3 *n = DoubLL.LookValue(NULL);
+	Node3 *n1 = DoubLL.LookValue(1);
+	Node3 *n2 = DoubLL.LookValue(5);
+	DoubLL.Insert(n, 0);
+	DoubLL.Insert(n1, 11);
+	DoubLL.Insert(n2, 100);
+	cout<<"список после вставки в начало, конец, середину:	";
+	DoubLL.Show();
+	
+	Node3* n3 = DoubLL.LookPos(NULL);
+	Node3* n13 = DoubLL.LookPos(7);
+	Node3* n23 = DoubLL.LookPos(12);
+
+	DoubLL.Delete(n3);
+	DoubLL.Delete(n13);
+	DoubLL.Delete(n23);
+	cout<<"список после удаления из начала, середины, конца:	";
+	DoubLL.Show();
+
+	cout<<"длина списка:	"<<DoubLL.Lenght()<<"\n";
+	
+	int H1[]={4, 110};
+	int Q=0;
+	for(int i=0; i<2; i++){
+		if(H1[i]<=DoubLL.Lenght()){
+			Node3  *p=DoubLL.LookValue(H1[i]);
+			while(DoubLL.LookPos(Q)->GetValue()!=p->GetValue()){
+				Q++;
+				if(DoubLL.LookPos(Q)->GetValue()==p->GetValue())
+				cout<<"значение:	"<<H1[i]<<"\tиндекс элемента:	"<<Q-1<<endl;
+				if(Q>20)
+					break;
+			}
+			
+		}
+		else
+			cout<<"значение:	"<<H1[i]<<"\tтакого нет в списке!!!"<<endl;
+	}
+	int H[]={5, 7};
+	for(int i=0; i<2; i++){
+		if(H[i]<=DoubLL.Lenght()){
+			Node3  *p1=DoubLL.LookPos(H[i]);
+			cout<<"элемент под номером("<<H[i]<<")=="<<p1->GetValue()<<endl;	
+		}
+		else
+			cout<<"\nтакой позиции ("<<H[i]<<") нет в списке!!!\n\n"<<endl;
+	}
+	
+	cout<<"предыдущий 4 элемента ->"<<DoubLL.Prev(DoubLL.LookPos(4))->GetValue()<<endl;
+	cout<<"следуюий 4 элемента ->"<<DoubLL.Next(DoubLL.LookPos(4))->GetValue()<<endl;
+	
+	getch();
+	return 0;
+}

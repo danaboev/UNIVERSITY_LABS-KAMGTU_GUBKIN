@@ -1,0 +1,61 @@
+#include <iostream>
+#include <stdlib.h>
+#include <conio.h>
+#include <algorithm>
+#include "lib.h"
+using namespace std;
+
+void main() {
+	int const N = 14;
+	int test[N] = { 10, 5, 15, 3, 7, 12, 21, 27, 20, 1, 2, 6, 9, 10 };
+
+	Tree tree;
+	for (int i = 0; i < N; i++)
+		tree.addNode(test[i]);
+
+	tree.out(5);
+	cout << "\n\nMax: " << tree.max() << endl;
+	cout << "Min: " << tree.min() << endl << endl;
+
+	if (tree.next(5) != NULL)
+		cout << "Next [5]: " << tree.next(5)->getValue() << endl;
+	else
+		cout << "Next [5]: undefined" << endl;
+
+	if (tree.next(9) != NULL)
+		cout << "Next [9]: " << tree.next(9)->getValue() << endl;
+	else
+		cout << "Next [9]: undefined" << endl;
+
+	if (tree.next(27) != NULL)
+		cout << "Next [27]: " << tree.next(27)->getValue() << endl;
+	else
+		cout << "Next [27]: undefined" << endl;
+
+	cout << endl;
+	if (tree.prev(6) != NULL)
+		cout << "Prev [6]: " << tree.prev(6)->getValue() << endl;
+	else
+		cout << "Prev [6]: undefined" << endl;
+
+	if (tree.prev(1) != NULL)
+		cout << "Prev [1]: " << tree.prev(1)->getValue() << endl;
+	else
+		cout << "Prev [1]: undefined" << endl;
+
+	if (tree.prev(5) != NULL)
+		cout << "Prev [5]: " << tree.prev(5)->getValue() << endl;
+	else
+		cout << "Prev [5]: undefined" << endl;
+
+	tree.show();
+	tree.delNode(1);
+	tree.delNode(3);
+	tree.delNode(2);
+	tree.delNode(7);
+	tree.delNode(10);
+	tree.out(5);
+	tree.show();
+	tree.delTree();
+	cout << "Enter any key for finish >>>>" << endl;
+}

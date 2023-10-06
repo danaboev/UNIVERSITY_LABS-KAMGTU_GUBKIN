@@ -1,0 +1,83 @@
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <ctime>
+#include <windows.h>
+#define w 100
+
+using namespace std;
+
+int main(void )
+{
+  int m1, m2, n1, n2;
+  double** a, ** b, ** c;
+  srand(time(0));
+  setlocale(LC_ALL, "Russian"); 
+
+  cout << "Введите количество строк первой матрицы: ";
+  cin >> m1;
+  cout << "Введите количество столбцов первой матрицы: ";
+  cin >> n1;
+  cout << "Введите количество строк второй матрицы: ";
+  cin >> m2;
+  cout << "Введите количество столбцов второй матрицы: ";
+  cin >> n2;
+
+
+  if (n1 != m2)
+  {
+    cout << "Умножение невозможно!";
+    return 0;
+  }
+  // Ввод элементов первой матрицы
+  a = new double* [m1];
+  cout << "Задание элементов первой матрицы" << endl;
+
+  for (int i = 0; i < m1; i++)
+  {
+    a[i] = new double[n1];
+    for (int j = 0; j < n1; j++)
+    {
+
+      a[i][j] = rand()%10;
+    }
+  }
+
+  b = new double* [m2];
+  cout << "Задание элементов второй матрицы" << endl;
+  for (int i = 0; i < m2; i++)
+  {
+    b[i] = new double[n2];
+    for (int j = 0; j < n2; j++)
+    {
+
+       b[i][j]= rand()%10;
+    }
+  }
+ 
+  // Умножение матриц
+  unsigned int start_time = clock();
+  c = new double* [m1];
+  for (int i = 0; i < m1; i++)
+  {
+    c[i] = new double[n2];
+    for (int j = 0; j < n2; j++)
+    {
+      c[i][j] = 0;
+      for (int k = 0; k < n1; k++)
+        c[i][j] += a[i][k] * b[k][j];
+    }
+  }
+  unsigned int end_time = clock();
+
+  
+ 
+unsigned int search_time = end_time - start_time  ;
+
+	double tsec = search_time / double(CLOCKS_PER_SEC);
+	cout << "\n " <<"Время выполнения  = " << tsec << "\n"<< endl; 
+
+  cin.get(); cin.get();
+  return 0;
+}

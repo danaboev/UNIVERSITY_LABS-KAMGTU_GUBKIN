@@ -1,0 +1,61 @@
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <ctime>
+#include <windows.h>
+#define w 100
+
+ 
+
+using namespace std;
+
+int n = 100;
+void function_second() ;
+
+void function_first() 
+{
+	for ( int i = 1; i < n; ++i )
+		for ( int j = 1; j < n; ++j )
+		{
+			function_second() ;
+		}
+}
+
+
+
+void function_second() 
+{
+	int  y=0, z=0;
+		
+	for(int  i = 1;  i < n; ++i)
+		y = y * i - 2;
+
+	for(int  i = 1;  i < n; ++i)
+	{
+		for(int  j = 1;  j < 2 * n; ++j)
+			z = z + i * j;
+	}
+}
+
+void main()
+{
+	int x=0;
+	
+	 unsigned int start_time = clock();
+	for(int  i = 1;  i < n; ++i)
+		x = x + i;
+	function_first() ;
+	unsigned int end_time = clock();
+
+  
+ 
+unsigned int search_time = end_time - start_time  ;
+
+	double tsec = search_time / double(CLOCKS_PER_SEC);
+	cout << "\n " <<"runtime  = " << tsec << "\n"<< endl; 
+
+
+_getch();
+}
+

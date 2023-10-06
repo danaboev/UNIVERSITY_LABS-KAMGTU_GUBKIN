@@ -1,0 +1,39 @@
+#include <iostream>
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctime>
+#include <time.h>
+#include <windows.h>
+#include <chrono>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <list>
+#include <map>
+#include <stdlib.h>
+#include <locale.h>
+#include "lib.h"
+#define N 8
+using namespace std;
+
+void main() {
+	
+	cout << "Array based ring queue" << endl;
+	ringQueue ring;
+	cout << "Empty ring: " << ring.isEmpty() << endl;
+	for (int i = 1; i < N; i++)
+		ring.push(i);
+	cout << "Ring queue: ";
+	ring.out();
+
+	ring.pop();
+	ring.pop();
+	cout << "Ring queue: ";
+	ring.out();
+
+	cout << "Size of ring: " << ring.size() << endl;
+	cout << "Empty ring: " << ring.isEmpty() << endl << endl;
+	cout << "Enter any key for finish....."<< endl; 
+
+}

@@ -1,0 +1,54 @@
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <ctime>
+#include <windows.h>
+#include <chrono>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    setlocale(LC_ALL, "rus");
+
+    int ans[20]; // создали массив для записи всех индексов
+    int h = 0;
+    int arr[20]; // создали массив на 20 элементов
+    int key; // создали переменную в которой будет находиться ключ
+
+    cout << "Massive:";
+    srand(time(NULL));
+    for (int i = 0; i < 20; i++) {
+        arr[i] = 1 + rand() % 10; // заполняем случайными числами ячейки
+        cout << arr[i] << " "; // выводим все ячейки массива
+        if (i == 20) {
+            cout <<"\n";
+        }
+    }
+    cout << "\nAfter sort:";
+    sort(arr, arr + 20);
+    for (int i = 0; i < 20; i++) {
+        cout << arr[i] << " ";
+    }
+  
+    cout << endl << "Key : "; 
+    cin >> key; // считываем ключ
+    auto start = chrono::steady_clock::now();
+    for (int i = 0; i < 20; i++) {
+        if (arr[i] == key) { // проверяем равен ли arr[i] ключу
+            ans[h++] = i;
+        }
+    }
+    if (h != 0) { // проверяем были ли совпадения
+        for (int i = 0; i<h; i++) 
+            cout << "Key :  " << key << " Index " << ans[i] << endl; //выводим все индексы
+            auto stop = chrono::steady_clock::now();
+            auto ns = chrono::duration_cast<chrono::nanoseconds>(stop - start);
+            cout << "runtime  = " << ns.count() << " nanosec" << endl;
+        
+    }
+    else 
+        cout << "No " << key ;
+
+    return 0;
+}

@@ -1,0 +1,68 @@
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <ctime>
+#include <windows.h>
+#include <chrono>
+#include <algorithm>
+using namespace std;
+int main() {
+    setlocale(LC_ALL, "rus");
+    int ans[20]; // создали массив для записи всех индексов
+    int h = 0;
+    int arr[20]; // создали массив на 20 элементов
+    int key; // создали переменную в которой будет находиться ключ
+    bool flag = false;
+    int l = 0; // левая граница
+    int r = 19; // правая граница - размер массива-1
+    int mid;
+
+    cout << "Massive: ";
+    srand(time(NULL));
+    for (int i = 0; i < 20; i++) {
+        arr[i] = 1 + rand() % 10; // заполняем случайными числами ячейки
+        cout << arr[i] << " "; // выводим все ячейки массива
+    }
+    cout << endl;
+
+    cout << "After sort: ";
+    sort(arr, arr + 20); // сортируем с помощью функции sort (быстрая сортировка)
+    for (int i = 0; i < 20; i++) {
+        cout << arr[i] << " "; // выводим все ячейки массива
+    }
+    cout << endl;
+    cout << endl << "Key: ";
+    cin >> key; // считываем ключ
+   auto start = chrono::steady_clock::now();
+
+    while ((l <= r) && (flag != true)) {
+        mid = (l + r) / 2; // считываем срединный индекс отрезка [l,r]
+
+        if (arr[mid] == key) flag = true; //проверяем ключ со серединным элементом
+        if (arr[mid] > key) r = mid - 1; // проверяем, какую часть нужно отбросить
+        else l = mid + 1;
+    }
+
+    if (flag) {
+        while (arr[mid] == key) mid--;
+        ans[0] = ++mid;
+
+        int i = 0;
+        while (arr[mid] == key)
+            ans[i++] = mid++;
+
+        cout << "Index " << key << ": ";
+
+        for (int k = 0; k < i; k++)
+            cout << ans[k] << " ";
+        cout << endl;
+
+        auto stop = chrono::steady_clock::now();
+        auto ns = chrono::duration_cast<chrono::nanoseconds>(stop - start);
+        cout << "runtime  = " << ns.count() << " nanosec" << endl;
+    }
+    else cout << "No " << key << endl;
+    return 0;
+
+}

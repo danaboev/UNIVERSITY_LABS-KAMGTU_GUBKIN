@@ -1,0 +1,196 @@
+#include <iostream>
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctime>
+#include <windows.h>
+#include <chrono>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <list>
+
+using namespace std;
+
+class List
+{
+private:
+	int* body;
+	int maxsize;
+	int last;
+public:
+	List() {
+		maxsize = 50;
+		body = new int[maxsize];
+		for (int x = 0; x < maxsize; x++)
+			body[x] = 0;
+		last = 0;
+
+	}
+
+	List(int size) {
+		last = -1;
+		maxsize = size;
+		body = new int[maxsize];
+		for (int x = 0; x < maxsize; x++)
+			body[x] = 0;
+		last = 0;
+	}
+
+	~List() {
+		delete[]body;
+	}
+	
+	int getmaxsize()
+	{
+		return maxsize;
+	}
+
+	int getbody() {
+
+		for (int x = 0; x <= last; x++)
+			cout << body[x] << "  ";
+		return 0;
+	}
+
+	int setbody(int s) {
+
+		last = s-1;	
+		cout << "\nInter "<< s << " numbers: ";	
+		for (int x = 0; x <= last; x++)
+			cin >> body[x];
+		return 0;
+
+	}
+
+	int LookUp(int key)
+	{
+		
+		int *ans = new int [maxsize];
+		int h = 0;
+		for (int i = 0; i < maxsize; i++) {
+			if (body[i] == key) { 
+				ans[h++] = i;
+			}
+		}
+		if (h != 0) { 
+			for (int i = 0; i < h; i++)
+				cout << "\nKey:  " << key << " Index: " << ans[i] << endl<<"\n"; 
+		}
+		delete [] ans;
+		return 0;
+	}
+
+	int GetItem(int nl)
+	{
+		
+		if (nl < 0 || nl > last)
+		{
+			cout << "\nIndex not found in the array " << nl;
+			return 0;
+		}
+		else return body[nl];
+	}
+
+	int Insert(int insert, int pos){
+		if (pos < 0 || pos > last+1)
+		{
+			cout << "\nIndex not found in the array " << pos;
+		}
+		else {	
+			for (int l = last+1; l > pos; l--)
+			{
+				body[l] = body[l - 1];
+			}
+			body[pos] = insert;
+			last++;
+			cout << "\n Now the new array is : "<<" \n";
+			getbody();
+		}		
+		return 0;
+	}
+
+	int Del(int pos) {
+		if (pos < 0 || pos > last)
+		{
+			cout << "\nIndex not found in the array " << pos;
+		}
+		else {	
+			for (int p = pos; p <= last; p++)
+			{
+				body[p] = body[p + 1];
+			}
+			last--;
+			cout << "\nNow the new array is:\n";
+			getbody();
+		}
+		return 0;
+	}
+
+	int Next(int pos) {
+		if (pos < 0 || pos >= last)
+			cout << "\nNo next, sorry\n";
+		else
+			cout << "\nNext number is" << body[pos+1] <<"\n";
+		return 0;
+	}
+
+	int Prev(int pos){
+		if (pos <= 0 || pos > last)
+			cout << "\nNo prev, sorry\n";
+		else
+			cout << "\nPrev number is" << body[pos-1] <<"\n";
+		return 0;
+	}
+
+	int Lenght() {
+		return last + 1;
+	}
+
+};
+	int main()
+	{
+		setlocale(0, "");
+		int sz, szfact, i, key, nl,insert,  pos, del, n, p;
+		cout << "Max size: ";
+		cin >> sz;
+		List massiv(sz);
+
+		cout << "Size: ";
+		cin >> szfact;
+		massiv.setbody(szfact);
+		
+		cout << "\nMassive: " << endl;
+		massiv.getbody();
+
+		cout << endl << "\nEnter key to LookKUp : ";
+		cin >> key; 
+		massiv.LookUp(key);
+
+		cout << "\nEnter the index to GetItem: ";
+		cin >> nl;
+		cout << massiv.GetItem(nl);
+
+		cout << "\nEnter  element to be insert : ";
+		cin >> insert;
+		cout << "\n At which position( enter index) : ";
+		cin >> pos;
+		massiv.Insert(insert,pos);
+
+		cout << "\nEnter position of element to be delete : ";
+		cin >> del;
+		massiv.Del(del);
+
+		cout << "\nEnter index for next el. : " ;
+		cin >> n;
+		massiv.Next(n);
+
+		cout << "\nEnter index for prev el. : " ;
+		cin >> p;
+		massiv.Prev(p);
+
+		cout << "\n Result len: "<< massiv.Lenght() << "\n";
+		return 0;
+		
+
+	}

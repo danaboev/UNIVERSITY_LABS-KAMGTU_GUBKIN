@@ -1,0 +1,36 @@
+#include <iostream>
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctime>
+#include <time.h>
+#include <windows.h>
+#include <chrono>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <list>
+#include <map>
+#include <stdlib.h>
+#include <locale.h>
+#include "lib.h"
+#define N 8
+using namespace std;
+
+void main() {
+	
+	cout << "Array stack" << endl;
+	arrStack arrStack;
+	cout << "Emty stack: " << arrStack.isEmpty();
+	for (int i = 1; i < N; i++)
+		arrStack.push(i);
+	arrStack.out();
+
+	arrStack.pop();
+	arrStack.out();
+
+	cout << "\nSize of stack: " << arrStack.size() << endl;
+	cout << "Emty stack: " << arrStack.isEmpty() << endl << endl;
+	cout << "Enter any key for finish....."<< endl; 
+
+}

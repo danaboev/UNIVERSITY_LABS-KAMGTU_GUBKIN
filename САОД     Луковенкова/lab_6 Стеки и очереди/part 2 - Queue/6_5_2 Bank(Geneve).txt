@@ -1,0 +1,90 @@
+#include <iostream>
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctime>
+#include <time.h>
+#include <windows.h>
+#include <chrono>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <list>
+#include <map>
+#include <stdlib.h>
+#include <locale.h>
+#include "lib.h"
+#define N 8
+using namespace std;
+
+void main() {
+	
+	cout << "Geneva International Bank" << endl;
+
+	srand(time(NULL));
+	int max_clients = 270;
+	int max_before_open = 10;
+	const int N_worker = 3;
+	bQueue clients;
+	arrQueue workers;
+	int timeOfEnd[N_worker];//stores the end time of work with the client
+	int clientToWorker[N_worker];//to remember which employee which client to went 
+	for (int i = 0; i < N_worker; i++)
+		timeOfEnd[i] = -1;
+
+	for (int i = 1; i <= N_worker; i++) {
+		workers.push(i);
+	}
+
+	int now_talons = 0;
+	int before_working = rand() % 10;
+	cout << "Clients before working: " << before_working << endl << endl;
+	now_talons += before_working;
+	for (int i = 1; i <= now_talons; i++) {
+		int timeOfService = rand() % 55 + 5;
+		clients.push(i, timeOfService);
+	}
+	int min = 9 * 60;
+	outTime(min);
+	infClientsAndWorkers(&workers, &clients);
+	for (min++; min < 18 * 60; min++) {
+		for (int i = 0; i < N_worker; i++) {
+			if (timeOfEnd[i] == min) {
+				outTime(min);
+				infClientsAndWorkers(&workers, &clients);
+				cout << "\n\t" << clientToWorker[i] << " Customer: " << i + 1 << " Employee (request completed)" << endl;
+				workers.push(i + 1);
+			}
+		}
+		if ((clients.sizeArr() > 0) & (workers.sizeArr() > 0)) {
+			int countWorkers = workers.sizeArr();
+			for (int i = 0; i < countWorkers; i++) {
+				if (clients.front() != NULL) {
+					cout << "\t" << clients.front()->GetTalon() << " Customer: " << workers.front() << " Employee and processing time" << clients.front()->GetTime() << " min." << endl;
+					timeOfEnd[workers.front() - 1] = min + clients.front()->GetTime() - 1;//employee service end time
+					clientToWorker[workers.front() - 1] = clients.front()->GetTalon();
+					clients.pop();
+					workers.pop();
+				}
+			}
+			infClientsAndWorkers(&workers, &clients);
+		}
+
+		if (now_talons < max_clients) {//ERROR  there can be not more customers than coupons
+			int new_client = rand() % 2;//whether the client came or not
+			if (new_client == 1) {
+				outTime(min);
+				now_talons++;
+				int timeOfService = rand() % 55 + 5;
+				clients.push(now_talons, timeOfService);
+				cout << "\tNew customer " << now_talons << " Customer" << endl;
+				infClientsAndWorkers(&workers, &clients);
+			}
+		}
+	}
+	cout << "\n Left unattended customers: " << clients.sizeArr() << endl << endl << endl << endl;///Left unattended customers
+	cout << "Enter any key for finish....."<< endl; 
+
+}
+
+
