@@ -1,3 +1,6 @@
 # UNIVERSITY_LABS-KAMGTU_GUBKIN
-labs 
-VKR
+labs KAMCHATGTU
+-----------
+TEST APP - VKR
+-----------
+voice_helper - VKR
